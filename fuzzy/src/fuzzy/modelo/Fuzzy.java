@@ -9,6 +9,12 @@ public class Fuzzy {
 	private VariavelLinguistica conjuntoDeSaida;
 	private List<Regra> regras = new ArrayList<Regra>();
 	private List<Double> entradas = new ArrayList<Double>();
+	
+	public Fuzzy() {
+		this.conjuntoDeEntradas = new ArrayList<VariavelLinguistica>();
+		this.regras = new ArrayList<Regra>();
+		this.entradas = new ArrayList<Double>();
+	}
 
 	public Fuzzy(List<VariavelLinguistica> conjuntoDeEntradas,
 			VariavelLinguistica conjuntoDeSaida, List<Regra> regras,
@@ -110,56 +116,70 @@ public class Fuzzy {
 		for(Regra r : regras){
 			for(Conjunto c : conjuntoDeSaida.getConjuntos()){
 				String[] teste = r.getConsequente().getNome().split("-");
-				if(teste[1].equals(c.getNome()) && r.getConsequente().getPertinencia() > 0){
+				if(teste[1].equals(c.getNome()) && r.getGrauDeAtivacao() > 0){
 					//distribuindo os pontos normalmente
 					r.getConsequente().setPontos(c.getPontos());
 
 					//dois pontos
 					if(r.getConsequente().getPontos().size() == 2){
 						if(r.getConsequente().getPontos().get(0).getPertinencia()==1){
-							r.getConsequente().getPontos().get(0).setPertinencia(r.getConsequente().getPertinencia());
+							r.getConsequente().getPontos().get(0).setPertinencia(r.getGrauDeAtivacao());
 							Ponto p = new Ponto(r.getConsequente().getPontos().get(1).getPertinencia(),r.getConsequente().getPontos().get(1).getValor());
 							r.getConsequente().getPontos().add(p);
-							r.getConsequente().getPontos().get(1).setPertinencia(r.getConsequente().getPertinencia());
-							double x = r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(2).getValor() * r.getConsequente().getPertinencia() ;
+							r.getConsequente().getPontos().get(1).setPertinencia(r.getGrauDeAtivacao());
+							double x = r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(2).getValor() * r.getGrauDeAtivacao() ;
 							r.getConsequente().getPontos().get(1).setValor(x);
 						}else if(r.getConsequente().getPontos().get(1).getPertinencia()==1){
 
-							r.getConsequente().getPontos().get(1).setPertinencia(r.getConsequente().getPertinencia());
+							r.getConsequente().getPontos().get(1).setPertinencia(r.getGrauDeAtivacao());
 							Ponto p = new Ponto(r.getConsequente().getPontos().get(1).getPertinencia(),r.getConsequente().getPontos().get(1).getValor());
 							r.getConsequente().getPontos().add(p);
-							r.getConsequente().getPontos().get(1).setPertinencia(r.getConsequente().getPertinencia());
-							double x = (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getConsequente().getPertinencia() +  r.getConsequente().getPontos().get(0).getValor();
+							r.getConsequente().getPontos().get(1).setPertinencia(r.getGrauDeAtivacao());
+							double x = (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getGrauDeAtivacao() +  r.getConsequente().getPontos().get(0).getValor();
 							r.getConsequente().getPontos().get(1).setValor(x);
 						}
 						//tres pontos
 					}else if(r.getConsequente().getPontos().size() == 3){
+						// os dois primeiros pontos tem valor 1
 						if(r.getConsequente().getPontos().get(0).getPertinencia()==1 && r.getConsequente().getPontos().get(1).getPertinencia()==1){
-							r.getConsequente().getPontos().get(0).setPertinencia(r.getConsequente().getPertinencia());
+							r.getConsequente().getPontos().get(0).setPertinencia(r.getGrauDeAtivacao());
 							
-							double x2 = r.getConsequente().getPontos().get(2).getValor() - (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(1).getValor()) * r.getConsequente().getPertinencia();	
-							Ponto p2 = new Ponto(r.getConsequente().getPertinencia(), x2);
+							double x2 = r.getConsequente().getPontos().get(2).getValor() - (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(1).getValor()) * r.getGrauDeAtivacao();	
+							Ponto p2 = new Ponto(r.getGrauDeAtivacao(), x2);
 
 							r.getConsequente().getPontos().get(1).setPertinencia(p2.getPertinencia());
 							r.getConsequente().getPontos().get(1).setValor(p2.getValor());
-						}else{
-						double x1 = (r.getConsequente().getPontos().get(1).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getConsequente().getPertinencia() + r.getConsequente().getPontos().get(0).getValor();
-						Ponto p1 = new Ponto(r.getConsequente().getPertinencia(), x1);
-						double x2 = r.getConsequente().getPontos().get(2).getValor() - (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(1).getValor()) * r.getConsequente().getPertinencia();	
-						Ponto p2 = new Ponto(r.getConsequente().getPertinencia(), x2);
-
+							//os 2 ultmos tem valor 1
+						}else if(r.getConsequente().getPontos().get(1).getPertinencia()==1 && r.getConsequente().getPontos().get(2).getPertinencia()==1){
+						
+						double x1 = (r.getConsequente().getPontos().get(1).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getGrauDeAtivacao() + r.getConsequente().getPontos().get(0).getValor();
+						Ponto p1 = new Ponto(r.getGrauDeAtivacao(), x1);
+						
 						r.getConsequente().getPontos().get(1).setPertinencia(p1.getPertinencia());
 						r.getConsequente().getPontos().get(1).setValor(p1.getValor());
 
-						Ponto aux = new Ponto(r.getConsequente().getPontos().get(2).getPertinencia(), r.getConsequente().getPontos().get(2).getValor());
-						r.getConsequente().getPontos().add(aux);
-						r.getConsequente().getPontos().get(2).setPertinencia(p2.getPertinencia());
-						r.getConsequente().getPontos().get(2).setValor(p2.getValor());
-						//quatro pontos
+						r.getConsequente().getPontos().get(2).setPertinencia(r.getGrauDeAtivacao());
+						r.getConsequente().getPontos().get(2).setValor(r.getConsequente().getPontos().get(2).getValor());
+						
+						}else{
+							//so o do meio tem valor 1
+							double x1 = (r.getConsequente().getPontos().get(1).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getGrauDeAtivacao() + r.getConsequente().getPontos().get(0).getValor();
+							Ponto p1 = new Ponto(r.getGrauDeAtivacao(), x1);
+							double x2 = r.getConsequente().getPontos().get(2).getValor() - (r.getConsequente().getPontos().get(2).getValor() - r.getConsequente().getPontos().get(1).getValor()) * r.getGrauDeAtivacao();	
+							Ponto p2 = new Ponto(r.getGrauDeAtivacao(), x2);
+
+							r.getConsequente().getPontos().get(1).setPertinencia(p1.getPertinencia());
+							r.getConsequente().getPontos().get(1).setValor(p1.getValor());
+
+							Ponto aux = new Ponto(r.getConsequente().getPontos().get(2).getPertinencia(), r.getConsequente().getPontos().get(2).getValor());
+							r.getConsequente().getPontos().add(aux);
+							r.getConsequente().getPontos().get(2).setPertinencia(p2.getPertinencia());
+							r.getConsequente().getPontos().get(2).setValor(p2.getValor());
+							//quatro pontos
 						}}else if(r.getConsequente().getPontos().size() == 4){
-						double x1 = (r.getConsequente().getPontos().get(1).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getConsequente().getPertinencia() + r.getConsequente().getPontos().get(0).getValor();
+						double x1 = (r.getConsequente().getPontos().get(1).getValor() - r.getConsequente().getPontos().get(0).getValor()) * r.getGrauDeAtivacao() + r.getConsequente().getPontos().get(0).getValor();
 						r.getConsequente().getPontos().get(1).setPertinencia(x1);
-						double x2 = r.getConsequente().getPontos().get(3).getValor() - (r.getConsequente().getPontos().get(3).getValor() - r.getConsequente().getPontos().get(2).getValor()) * r.getConsequente().getPertinencia();	
+						double x2 = r.getConsequente().getPontos().get(3).getValor() - (r.getConsequente().getPontos().get(3).getValor() - r.getConsequente().getPontos().get(2).getValor()) * r.getGrauDeAtivacao();	
 						r.getConsequente().getPontos().get(2).setPertinencia(x2);
 					}
 				}
@@ -168,12 +188,15 @@ public class Fuzzy {
 		}
 
 	}
-
+/**
+ * Caso mais de uma regra com o mesmo consequente seja ativada, 
+ * eh eliminada aquela regra que possui o menor grau de ativacao
+ */
 	public void agregarConjuntos(){
-		List<Regra> paraRemover = new ArrayList<Regra>();
+		List<Integer> paraRemover = new ArrayList<Integer>();
 		fodefora: for(int i =0; i< regras.size();i++){
-			 for(Regra ver : paraRemover){
-				if(ver.getConsequente()== regras.get(i).getConsequente()){
+			 for(int ver : paraRemover){
+				if(regras.get(ver).getConsequente()== regras.get(i).getConsequente()){
 					break fodefora;
 					
 				}
@@ -181,19 +204,21 @@ public class Fuzzy {
 			for(int j = 0; j<regras.size(); j++){
 				if(i!=j){
 					if(regras.get(i).getConsequente().getNome().equals(regras.get(j).getConsequente().getNome())){
-						if(regras.get(i).getConsequente().getPertinencia() >= regras.get(j).getConsequente().getPertinencia()){
-							paraRemover.add(regras.get(j));
+						if(regras.get(i).getGrauDeAtivacao() >= regras.get(j).getGrauDeAtivacao()){
+							paraRemover.add(j);
 						}
 					}
 				}
 			}
 		}
-		for(Regra i : paraRemover){
-			this.regras.remove(i);
+		for(int i : paraRemover){
+			regras.remove(i);
 		}
 
 	}
-
+/**
+ * Percorre todas as regras para configurar seu grau de ativacao
+ */
 	public void ativarRegras(){
 		for(Regra r: regras){
 			for(int i = 0; i < r.getAntecedentes().size(); i++){
@@ -217,7 +242,7 @@ public class Fuzzy {
 			for(Conjunto c:r.getAntecedentes()){
 				if(c.getPertinencia() < menor){
 					menor = c.getPertinencia();
-					r.getConsequente().setPertinencia(menor);
+					r.setGrauDeAtivacao(menor);
 				}
 			}
 

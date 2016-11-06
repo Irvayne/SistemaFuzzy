@@ -7,6 +7,11 @@ public class Regra {
 	
 	private List<Conjunto> antecedentes = new ArrayList<Conjunto>();
 	private Conjunto consequente;
+	private double grauDeAtivacao;
+	
+	public Regra(){
+		antecedentes = new ArrayList<Conjunto>();
+	}
 	
 	public Regra(List<Conjunto> antecedentes, Conjunto consequente) {
 		this.antecedentes = antecedentes;
@@ -27,5 +32,13 @@ public class Regra {
 
 	public void setConsequente(Conjunto consequente) {
 		this.consequente = consequente;
+	}
+
+	public double getGrauDeAtivacao() {
+		return grauDeAtivacao;
+	}
+
+	public void setGrauDeAtivacao(double grauDeAtivacao) {
+		this.grauDeAtivacao = grauDeAtivacao;
 	}
 }

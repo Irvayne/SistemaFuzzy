@@ -42,17 +42,21 @@ public class Atividade1 {
 		VariavelLinguistica variavelEntrada = new VariavelLinguistica("Temperatura",conjuntosEntrada );
 		fuzzy.getConjuntoDeEntradas().add(variavelEntrada);
 		
-		fuzzy.getEntradas().add(24.0);
+		fuzzy.getEntradas().add(36.0);
 		
 		fuzzy.fuzzyficacao();
 		
-		System.out.println(fuzzy.getConjuntoDeEntradas().get(0).getNome());
-		for(Conjunto c: fuzzy.getConjuntoDeEntradas().get(0).getConjuntos()){
-			System.out.println(" -> "+c.getNome());
-			for(Ponto p: c.getPontos()){
-				System.out.println("   "+p.getPertinencia()+"/"+p.getValor());
-			}
-		}
+		for(VariavelLinguistica v: fuzzy.getConjuntoDeEntradas())
+			for(Conjunto c:v.getConjuntos())
+				System.out.println(c.getNome() +" "+c.getPertinencia());
+		
+//		System.out.println(fuzzy.getConjuntoDeEntradas().get(0).getNome());
+//		for(Conjunto c: fuzzy.getConjuntoDeEntradas().get(0).getConjuntos()){
+//			System.out.println(" -> "+c.getNome());
+//			for(Ponto p: c.getPontos()){
+//				System.out.println("   "+p.getPertinencia()+"/"+p.getValor());
+//			}
+//		}
 		
 		fuzzy.getConjuntoDeSaida().setNome("Pressao");
 		
@@ -90,13 +94,13 @@ public class Atividade1 {
 		r2.getAntecedentes().add(new Conjunto("Temperatura-Baixa"));
 		
 		Regra r3 = new Regra(new ArrayList<Conjunto>(),new Conjunto("Pressao-Grande"));
-		r3.getAntecedentes().add(new Conjunto("Temperatura-Media"));
+		r3.getAntecedentes().add(new Conjunto("Temperatura-Medio"));
 		
 		Regra r4 = new Regra(new ArrayList<Conjunto>(),new Conjunto("Pressao-Muito Grande"));
-		r4.getAntecedentes().add(new Conjunto("Temperatura-Alta"));
+		r4.getAntecedentes().add(new Conjunto("Temperatura-Alto"));
 		
 		Regra r5 = new Regra(new ArrayList<Conjunto>(),new Conjunto("Pressao-Pequena"));
-		r5.getAntecedentes().add(new Conjunto("Temperatura-Muito Alta"));
+		r5.getAntecedentes().add(new Conjunto("Temperatura-Muito Alto"));
 		
 		fuzzy.getRegras().add(r1);
 		fuzzy.getRegras().add(r2);
@@ -113,7 +117,7 @@ public class Atividade1 {
 		for(Regra re: fuzzy.getRegras()){
 			for(Conjunto con:re.getAntecedentes() )
 				System.out.print(" se "+con.getNome()+" / "+con.getPertinencia() +" e");
-			System.out.println("ntao "+re.getConsequente().getNome() + " - "+re.getConsequente().getPertinencia());
+				System.out.println("ntao "+re.getConsequente().getNome() + " - "+re.getGrauDeAtivacao());
 		}
 		
 		fuzzy.agregarConjuntos();
@@ -126,7 +130,7 @@ public class Atividade1 {
 		}
 		
 		}
-		fuzzy.defuzzyficacaoTipoMaximo();
+//	fuzzy.defuzzyficacaoTipoMaximo();
 		//fuzzy.defuzzyTipoCentroide();
 	}
 

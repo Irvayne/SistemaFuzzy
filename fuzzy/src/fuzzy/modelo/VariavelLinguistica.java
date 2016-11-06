@@ -7,6 +7,10 @@ public class VariavelLinguistica {
 
 	private String nome;
 	private List<Conjunto> conjuntos = new ArrayList<Conjunto>();
+	
+	public VariavelLinguistica() {
+		
+	}
 
 	public VariavelLinguistica(String nome, List<Conjunto> conjuntos) {
 		this.nome = nome;

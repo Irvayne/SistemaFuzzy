@@ -11,6 +11,7 @@ public class Conjunto {
 	
 	public Conjunto(String nome){
 		this.nome = nome;
+		pontos = new ArrayList<Ponto>();
 		pertinencia = 0.0;
 	}
 	
