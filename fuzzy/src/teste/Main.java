@@ -1,7 +1,13 @@
-package fuzzy.modelo;
+package teste;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import fuzzy.modelo.Conjunto;
+import fuzzy.modelo.Fuzzy;
+import fuzzy.modelo.Ponto;
+import fuzzy.modelo.Regra;
+import fuzzy.modelo.VariavelLinguistica;
 
 public class Main {
 
