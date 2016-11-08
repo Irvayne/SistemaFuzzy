@@ -198,6 +198,8 @@ public class Atividade3 {
 			}
 
 		}
+		
+		fuzzy.defuzzyTipoCentroide();
 
 	}
 

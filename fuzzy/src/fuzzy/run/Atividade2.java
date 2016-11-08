@@ -1,8 +1,10 @@
 package fuzzy.run;
 
-import java.util.ArrayList;
-
-import fuzzy.modelo.*;
+import fuzzy.modelo.Conjunto;
+import fuzzy.modelo.Fuzzy;
+import fuzzy.modelo.Ponto;
+import fuzzy.modelo.Regra;
+import fuzzy.modelo.VariavelLinguistica;
 
 public class Atividade2 {
 
@@ -195,6 +197,9 @@ public class Atividade2 {
 			}
 
 		}
+
+		fuzzy.defuzzyTipoCentroide();
+
 
 	}
 

@@ -131,7 +131,7 @@ public class Atividade1 {
 		
 		}
 //	fuzzy.defuzzyficacaoTipoMaximo();
-		//fuzzy.defuzzyTipoCentroide();
+		fuzzy.defuzzyTipoCentroide();
 	}
 
 }
